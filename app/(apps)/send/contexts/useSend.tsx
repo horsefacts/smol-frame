@@ -6,7 +6,6 @@ import {useAccount, useChainId, useConfig} from 'wagmi';
 
 import {useAddressBook} from '@lib/contexts/useAddressBook';
 import {useWallet} from '@lib/contexts/useWallet';
-import {useIsSafe} from '@lib/hooks/web3/useIsSafe';
 import {slugify} from '@lib/utils/helpers';
 import {notifySend} from '@lib/utils/notifier';
 import {toBigInt} from '@lib/utils/numbers';
@@ -36,7 +35,6 @@ export const useSend = (
 	const {address, connector} = useAccount();
 	const {configuration, dispatchConfiguration} = useSendContext();
 	const {bumpEntryInteractions} = useAddressBook();
-	const isSafe = useIsSafe();
 	const {sdk} = useSafeAppsSDK();
 	const {getToken, getBalance, onRefresh} = useWallet();
 
@@ -297,13 +295,6 @@ export const useSend = (
 			(input): input is TInputWithToken => !!input.token && input.status !== 'success'
 		);
 
-		if (isSafe) {
-			if (txInfo) {
-				return onMigrateSelectedForGnosis([], txInfo);
-			}
-			return onMigrateSelectedForGnosis(allSelected);
-		}
-
 		if (txInfo && isAddressEqual(txInfo.token.address, ethTokenAddress)) {
 			const result = await onMigrateETH(undefined, txInfo);
 			if (result.isSuccessful) {
@@ -372,7 +363,6 @@ export const useSend = (
 		setMigrateStatus,
 		configuration.inputs,
 		configuration.receiver.address,
-		isSafe,
 		txInfo,
 		bumpEntryInteractions,
 		chainID,

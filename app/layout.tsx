@@ -6,7 +6,40 @@ import Providers from 'app/Providers';
 
 import '../style.css';
 
+import type {Metadata} from 'next';
 import type {ReactElement} from 'react';
+
+const frame = {
+	version: 'next',
+	imageUrl: 'https://smol-frame.vercel.app/og.png',
+	button: {
+		title: 'Launch',
+		action: {
+			type: 'launch_frame',
+			name: 'Smol Frame',
+			url: 'https://smol-frame.vercel.app/',
+			iconImageUrl: 'https://smol-frame.vercel.app/avatar.png',
+			splashImageUrl: 'https://smol-frame.vercel.app/avatar.png',
+			splashBackgroundColor: '#ffffff'
+		}
+	}
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+	return {
+		metadataBase: new URL('https://smol-frame.vercel.app/'),
+		title: 'Smol Frame',
+		openGraph: {
+			title: 'Smol Frame',
+			description: 'Simple, smart and elegant dapps, designed to make your crypto journey a little bit easier.',
+			images: 'https://smol-frame.vercel.app/og.png'
+		},
+		other: {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			'fc:frame': JSON.stringify(frame)
+		}
+	};
+}
 
 export default async function RootLayout(props: {children: ReactElement}): Promise<ReactElement> {
 	const initialState = cookieToInitialState(config, (await headers()).get('cookie'));

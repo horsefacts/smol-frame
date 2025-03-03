@@ -1,25 +1,14 @@
 'use client';
 
-import {RainbowKitProvider, getDefaultConfig} from '@rainbow-me/rainbowkit';
-import {
-	coinbaseWallet,
-	frameWallet,
-	injectedWallet,
-	ledgerWallet,
-	metaMaskWallet,
-	rainbowWallet,
-	safeWallet,
-	walletConnectWallet
-} from '@rainbow-me/rainbowkit/wallets';
+import {farcasterFrame} from '@farcaster/frame-wagmi-connector';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {cookieStorage, createStorage, fallback, http} from '@wagmi/core';
+import {createConfig, fallback, http} from '@wagmi/core';
 import {Fragment} from 'react';
 import {WagmiProvider} from 'wagmi';
 
 import {WithTokenList} from '@lib/contexts/WithTokenList';
 import {networks} from '@lib/utils/tools.chains';
 
-import type {AvatarComponent, DisclaimerComponent, Theme} from '@rainbow-me/rainbowkit';
 import type {ReactElement} from 'react';
 import type {Chain} from 'viem';
 import type {State} from 'wagmi';
@@ -55,57 +44,23 @@ for (const chain of networks) {
 	allTransports[chain.id] = withRPC(chain);
 }
 
-export const config = getDefaultConfig({
-	appName: (process.env.WALLETCONNECT_PROJECT_NAME as string) || '',
-	projectId: process.env.WALLETCONNECT_PROJECT_ID as string,
-	chains: networks as any,
-	ssr: true,
-	syncConnectedChain: true,
-	wallets: [
-		{
-			groupName: 'Popular',
-			wallets: [
-				injectedWallet,
-				frameWallet,
-				metaMaskWallet,
-				walletConnectWallet,
-				rainbowWallet,
-				ledgerWallet,
-				coinbaseWallet,
-				safeWallet
-			]
-		}
-	],
-	storage: createStorage({
-		storage: cookieStorage
-	}),
-	transports: allTransports
-});
-
 type TWithMom = {
 	children: ReactElement;
 	initialState?: State;
 	defaultNetwork?: Chain;
 	supportedChains: Chain[];
 	tokenLists?: string[];
-	rainbowConfig?: {
-		initialChain?: Chain | number;
-		id?: string;
-		theme?: Theme | null;
-		showRecentTransactions?: boolean;
-		appInfo?: {
-			appName?: string;
-			learnMoreUrl?: string;
-			disclaimer?: DisclaimerComponent;
-		};
-		coolMode?: boolean;
-		avatar?: AvatarComponent;
-		modalSize?: 'compact' | 'wide';
-	};
 };
 
 const queryClient = new QueryClient();
-function WithMom({children, tokenLists, rainbowConfig, initialState}: TWithMom): ReactElement {
+
+export const config = createConfig({
+	chains: [networks[0], ...networks.slice(1)],
+	transports: allTransports,
+	connectors: [farcasterFrame()]
+});
+
+function WithMom({children, tokenLists, initialState}: TWithMom): ReactElement {
 	function isIframe(): boolean {
 		if (typeof window === 'undefined') {
 			return false;
@@ -126,11 +81,9 @@ function WithMom({children, tokenLists, rainbowConfig, initialState}: TWithMom):
 			reconnectOnMount={!isIframe()}
 			initialState={initialState}>
 			<QueryClientProvider client={queryClient}>
-				<RainbowKitProvider {...rainbowConfig}>
-					<WithTokenList lists={tokenLists}>
-						<Fragment>{children}</Fragment>
-					</WithTokenList>
-				</RainbowKitProvider>
+				<WithTokenList lists={tokenLists}>
+					<Fragment>{children}</Fragment>
+				</WithTokenList>
 			</QueryClientProvider>
 		</WagmiProvider>
 	);

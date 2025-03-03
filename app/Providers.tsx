@@ -10,6 +10,7 @@ import {IndexedDB} from '@lib/contexts/useIndexedDB';
 import {WithPopularTokens} from '@lib/contexts/usePopularTokens';
 import {WalletContextApp} from '@lib/contexts/useWallet';
 import {WithFonts} from '@lib/contexts/WithFonts';
+import {WithFrame} from '@lib/contexts/WithFrame';
 import {WithMom} from '@lib/contexts/WithMom';
 import {WithPrices} from '@lib/contexts/WithPrices/WithPrices';
 import {networks, supportedNetworks} from '@lib/utils/tools.chains';
@@ -25,22 +26,24 @@ function Providers(props: {children: ReactNode; initialState: State | undefined}
 					supportedChains={networks}
 					initialState={props.initialState}
 					tokenLists={['https://raw.githubusercontent.com/SmolDapp/tokenLists/main/lists/popular.json']}>
-					<WalletContextApp
-						shouldWorkOnTestnet={
-							process.env.NODE_ENV === 'development' && Boolean(process.env.SHOULD_USE_FORKNET)
-						}>
-						<WithPopularTokens>
-							<WithPrices supportedNetworks={supportedNetworks}>
-								<SafeProvider>
-									<PlausibleProvider
-										domain={process.env.PLAUSIBLE_DOMAIN || 'smold.app'}
-										enabled={true}>
-										{props.children}
-									</PlausibleProvider>
-								</SafeProvider>
-							</WithPrices>
-						</WithPopularTokens>
-					</WalletContextApp>
+					<WithFrame>
+						<WalletContextApp
+							shouldWorkOnTestnet={
+								process.env.NODE_ENV === 'development' && Boolean(process.env.SHOULD_USE_FORKNET)
+							}>
+							<WithPopularTokens>
+								<WithPrices supportedNetworks={supportedNetworks}>
+									<SafeProvider>
+										<PlausibleProvider
+											domain={process.env.PLAUSIBLE_DOMAIN || 'smold.app'}
+											enabled={true}>
+											{props.children}
+										</PlausibleProvider>
+									</SafeProvider>
+								</WithPrices>
+							</WithPopularTokens>
+						</WalletContextApp>
+					</WithFrame>
 				</WithMom>
 			</IndexedDB>
 			<Toaster

@@ -53,7 +53,7 @@ export function useBeraname(): TENS {
 	}, [address]);
 
 	useEffect(() => {
-			fetchENSName();
+		fetchENSName();
 	}, [fetchENSName, address]);
 
 	return {name: beraname || '', avatar: beravatar || '', isLoading: isLoading};

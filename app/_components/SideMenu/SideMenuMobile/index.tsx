@@ -1,7 +1,6 @@
 'use client';
 
 import {Dialog, DialogPanel, Transition, TransitionChild} from '@headlessui/react';
-import {useIsMounted} from '@react-hookz/web';
 import {Fragment, useState} from 'react';
 import {useAccount} from 'wagmi';
 
@@ -10,7 +9,6 @@ import {NetworkPopoverSelector} from '@lib/components/NetworkSelector/Popover';
 import {SideMenuFooter} from '@lib/components/SideMenu/SideMenuFooter';
 import {SideMenuNav} from '@lib/components/SideMenu/SideMenuNav';
 import {CoinBalance} from '@lib/components/SideMenu/SideMenuProfile/CoinBalance';
-import {ConnectButton} from '@lib/components/SideMenu/SideMenuProfile/ConnectButton';
 import {ProfileBox} from '@lib/components/SideMenu/SideMenuProfile/ProfileBox';
 import {SkeletonPlaceholder} from '@lib/components/SideMenu/SideMenuProfile/SkeletonPlaceholder';
 import {cl} from '@lib/utils/helpers';
@@ -24,13 +22,8 @@ function SideMenuProfileMobile({onOpen}: {onOpen: () => void}): ReactElement {
 
 	if (!isAddress(address)) {
 		return (
-			<div className={'relative w-full'}>
-				<ConnectButton />
-				<button
-					className={'absolute right-6 top-4 z-50 rounded-full p-2 transition-colors hover:bg-neutral-200'}
-					onClick={onOpen}>
-					<IconHamburger className={'size-4'} />
-				</button>
+			<div className={'w-full'}>
+				<SkeletonPlaceholder />
 			</div>
 		);
 	}
@@ -59,15 +52,6 @@ function SideMenuProfileMobile({onOpen}: {onOpen: () => void}): ReactElement {
 
 export function SideMenuMobile(props: {menu?: TSideMenuItem[]}): ReactElement {
 	const [isOpen, setIsOpen] = useState(false);
-	const isMounted = useIsMounted();
-
-	if (!isMounted()) {
-		return (
-			<div className={'w-full'}>
-				<SkeletonPlaceholder />
-			</div>
-		);
-	}
 
 	return (
 		<>

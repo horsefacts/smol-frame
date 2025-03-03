@@ -11,6 +11,8 @@
 	},
 	"dependencies": {
 		"@clustersxyz/sdk": "^0.4.3",
+		"@farcaster/frame-sdk": "^0.0.29",
+		"@farcaster/frame-wagmi-connector": "^0.0.17",
 		"@gnosis.pm/safe-apps-react-sdk": "^4.6.2",
 		"@gnosis.pm/safe-apps-sdk": "^7.8.0",
 		"@headlessui/react": "^2.2.0",

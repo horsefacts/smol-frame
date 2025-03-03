@@ -10,7 +10,6 @@ import {ErrorModal} from '@lib/components/ErrorModal';
 import {SuccessModal} from '@lib/components/SuccessModal';
 import {useAddressBook} from '@lib/contexts/useAddressBook';
 import {useWallet} from '@lib/contexts/useWallet';
-import {useIsSafe} from '@lib/hooks/web3/useIsSafe';
 import {disperseERC20, disperseETH} from '@lib/utils/actions';
 import {slugify} from '@lib/utils/helpers';
 import {notifyDisperse} from '@lib/utils/notifier';
@@ -123,7 +122,6 @@ const useConfirmDisperse = (props: {
 	totalToDisperse: bigint;
 }): {onDisperseTokens: () => void} => {
 	const {onTrigger, onSuccess, onError, totalToDisperse} = props;
-	const isSafe = useIsSafe();
 	const config = useConfig();
 	const chainID = useChainId();
 	const {address, connector} = useAccount();
@@ -241,9 +239,6 @@ const useConfirmDisperse = (props: {
 
 	const onDisperseTokens = useCallback((): void => {
 		onTrigger();
-		if (isSafe) {
-			return onDisperseTokensForGnosis();
-		}
 
 		const [disperseAddresses, disperseAmount] = configuration.inputs
 			.filter((row): boolean => {
@@ -295,7 +290,6 @@ const useConfirmDisperse = (props: {
 		}
 	}, [
 		onTrigger,
-		isSafe,
 		configuration.inputs,
 		configuration.tokenToSend?.address,
 		onDisperseTokensForGnosis,
@@ -310,7 +304,6 @@ const useConfirmDisperse = (props: {
 };
 
 export function DisperseWizard(): ReactElement {
-	const isSafe = useIsSafe();
 	const {configuration, onResetDisperse} = useDisperse();
 	const [disperseStatus, setDisperseStatus] = useState(defaultTxStatus);
 	const {getBalance} = useWallet();
@@ -391,9 +384,6 @@ export function DisperseWizard(): ReactElement {
 	 *********************************************************************************************/
 	const getButtonTitle = (): string => {
 		if (shouldUseSend) {
-			return 'Disperse';
-		}
-		if (isSafe) {
 			return 'Disperse';
 		}
 		if (toAddress(configuration.tokenToSend?.address) === ethTokenAddress) {

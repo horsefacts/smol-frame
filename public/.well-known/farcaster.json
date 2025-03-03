@@ -1,0 +1,17 @@
+{
+    "accountAssociation": {
+      "header": "eyJmaWQiOjM2MjEsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgyY2Q4NWEwOTMyNjFmNTkyNzA4MDRBNkVBNjk3Q2VBNENlQkVjYWZFIn0",
+      "payload": "eyJkb21haW4iOiJzbW9sLWZyYW1lLnZlcmNlbC5hcHAifQ",
+      "signature": "MHgwZTA0NmQ2MzczNzg0MDk3NWUwYzZlNGVkY2NkMThmNjVkMDRiYzBhZjUxOGM4NjIxZjkyOTkwNWM4YjVmNGRmNzE4NzFjMWE4MDNiOWJhYWE3YzQwMjY3OGU4MmM3ZmNiYzE5ZGRhMmViZDA0YjUwYzg3NmQ0MTJlNWM5ZmI2ZTFj"
+    },
+    "frame": {
+      "version": "1",
+      "name": "Smol Frame",
+      "iconUrl": "https://smol-frame.vercel.app/avatar.png",
+      "homeUrl": "https://smol-frame.vercel.app",
+      "imageUrl": "https://smol-frame.vercel.app/og.png",
+      "buttonTitle": "Launch",
+      "splashImageUrl": "https://smol-frame.vercel.app/avatar.png",
+      "splashBackgroundColor": "#ffffff"
+    }
+  }

@@ -2,33 +2,7 @@
 'use client';
 
 import {zeroAddress} from 'viem';
-import {
-	arbitrum,
-	aurora,
-	avalanche,
-	base,
-	baseSepolia,
-	blast,
-	bsc,
-	celo,
-	confluxESpace,
-	fantom,
-	filecoin,
-	fraxtal,
-	gnosis,
-	linea,
-	mainnet,
-	mantle,
-	metis,
-	mode,
-	optimism,
-	polygon,
-	polygonZkEvm,
-	scroll,
-	sepolia,
-	zksync,
-	zora
-} from 'viem/chains';
+import {arbitrum, base, gnosis, mainnet, optimism, polygon, zora} from 'viem/chains';
 
 import {toAddress} from '@lib/utils/tools.addresses';
 
@@ -119,31 +93,6 @@ const localhost = {
 	}
 } as const satisfies Chain;
 
-
-export const berachain = {
-	id: 80094,
-	name: 'Berachain',
-	nativeCurrency: {
-		decimals: 18,
-		name: 'BERA',
-		symbol: 'BERA'
-	},
-	rpcUrls: {
-		default: {
-			http: ['https://rpc.berachain.com']
-		},
-		public: {
-			http: ['https://rpc.berachain.com']
-		}
-	},
-	contracts: {
-		multicall3: {
-			address: '0xca11bde05977b3631167028862be2a173976ca11',
-			blockCreated: 0
-		}
-	}
-} as const satisfies Chain;
-
 const isDev = process.env.NODE_ENV === 'development' && Boolean(process.env.SHOULD_USE_FORKNET);
 const CHAINS: TSmolChains = {
 	[mainnet.id]: {
@@ -171,7 +120,7 @@ const CHAINS: TSmolChains = {
 		yearnRouterAddress: toAddress('0x1112dbcf805682e828606f74ab717abf4b4fd8de'),
 		rpcUrls: assignRPCUrls(optimism)
 	},
-	[bsc.id]: {
+	/*[bsc.id]: {
 		...bsc,
 		isLifiSwapSupported: true,
 		isMultisafeSupported: true,
@@ -182,7 +131,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xD152f549545093347A162Dce210e7293f1452150'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(bsc)
-	},
+	},*/
 	[gnosis.id]: {
 		...gnosis,
 		isLifiSwapSupported: true,
@@ -206,7 +155,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xD152f549545093347A162Dce210e7293f1452150'),
 		yearnRouterAddress: toAddress('0x1112dbcf805682e828606f74ab717abf4b4fd8de'),
 		rpcUrls: assignRPCUrls(polygon)
-	},
+	} /*
 	[polygonZkEvm.id]: {
 		...polygonZkEvm,
 		isLifiSwapSupported: true,
@@ -251,7 +200,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xC813978A4c104250B1d2bC198cC7bE74b68Cd81b'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(mantle)
-	},
+	},*/,
 	[base.id]: {
 		...base,
 		isLifiSwapSupported: true,
@@ -263,7 +212,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xD152f549545093347A162Dce210e7293f1452150'),
 		yearnRouterAddress: toAddress('0x1112dbcf805682e828606f74ab717abf4b4fd8de'),
 		rpcUrls: assignRPCUrls(base)
-	},
+	} /*
 	[sepolia.id]: {
 		...sepolia,
 		isLifiSwapSupported: false,
@@ -285,7 +234,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xC813978A4c104250B1d2bC198cC7bE74b68Cd81b'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(baseSepolia)
-	},
+	},*/,
 	[arbitrum.id]: {
 		...arbitrum,
 		isLifiSwapSupported: true,
@@ -297,7 +246,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xD152f549545093347A162Dce210e7293f1452150'),
 		yearnRouterAddress: toAddress('0x1112dbcf805682e828606f74ab717abf4b4fd8de'),
 		rpcUrls: assignRPCUrls(arbitrum)
-	},
+	} /*
 	[celo.id]: {
 		...celo,
 		isLifiSwapSupported: true,
@@ -366,7 +315,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xe025e5B1c61FD98e33F02caC811469664A81b4BD'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(aurora)
-	},
+	},*/,
 	[zora.id]: {
 		...zora,
 		isLifiSwapSupported: false,
@@ -377,7 +326,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0xF7D540b9d4b94a24389802Bcf2f6f02013d08142'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(zora)
-	},
+	} /*
 	[mode.id]: {
 		...mode,
 		isLifiSwapSupported: true,
@@ -445,7 +394,7 @@ const CHAINS: TSmolChains = {
 		disperseAddress: toAddress('0x9c981Fa0FfF6dE9AC193FE4224e499445C814Bc4'),
 		yearnRouterAddress: undefined,
 		rpcUrls: assignRPCUrls(berachain)
-	}
+	}*/
 };
 
 if (isDev) {
