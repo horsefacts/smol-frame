@@ -11,7 +11,7 @@ import {WithAddressBook} from '@lib/contexts/useAddressBook';
 import AppHeading from 'app/(apps)/_appHeading';
 import AppInfo from 'app/(apps)/_appInfo';
 
-import type {ReactElement} from 'react';
+import type {ReactNode} from 'react';
 
 const MENU = [
 	{
@@ -53,7 +53,7 @@ const MENU = [
 	}
 ];
 
-export default function RootLayout(props: {children: ReactElement}): ReactElement {
+export default function RootLayout(props: {children: ReactNode}): ReactNode {
 	return (
 		<div className={'grid w-full grid-cols-root'}>
 			<nav

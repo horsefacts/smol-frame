@@ -7,7 +7,7 @@ import Providers from 'app/Providers';
 import '../style.css';
 
 import type {Metadata} from 'next';
-import type {ReactElement} from 'react';
+import type {ReactNode} from 'react';
 
 const frame = {
 	version: 'next',
@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	};
 }
 
-export default async function RootLayout(props: {children: ReactElement}): Promise<ReactElement> {
+export default async function RootLayout(props: {children: ReactNode}): Promise<ReactNode> {
 	const initialState = cookieToInitialState(config, (await headers()).get('cookie'));
 
 	return (
